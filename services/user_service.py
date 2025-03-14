@@ -1,30 +1,33 @@
 import logging
 
 from controllers.user_controller import UserController
+from models.user import User
 import json
 
 class UserService:
     user_controller = UserController()
 
 
-    def fetch_all_user(self):
-        user_data = self.user_controller.get_user_info()
-        print(user_data)
-        print(len(user_data["users"]))
+  #  def fetch_all_user(self):
+   #     user_data = self.user_controller.get_user_info()
+   #     print(user_data)
+   #     print(len(user_data["users"]))
 
-    def fetch_all_users_info(self,page_limit, limit=10):
+    def fetch_all_users_info(self, page_limit, limit):
         all_users = []
-        page = 1
-        while page <= page_limit:
-            user_data = self.user_controller.get_user_info(page, limit)
+        skip = 0
+        total_users = 0
+
+        while total_users < page_limit * limit:
+            user_data = self.user_controller.get_user_info(skip, limit)
             if user_data and user_data['users']:
-                all_users.extend(user_data['users'])
-                logging.info(f"Page: {page}")
-                page += 1
+                all_users.extend(self.fetch_users_from_data(user_data['users']))
+                logging.info(f"Range: {skip} - {skip+limit}")
+                skip += limit
+                total_users += len(user_data['users'])
             else:
                 break
         return all_users
-
 
 
     def fetch_user_info(self, user_id):
@@ -37,3 +40,10 @@ class UserService:
                 print(f"User ID {user_id} not found.")
         else:
             print("Failed to fetch user data")
+
+    def fetch_users_from_data(self, user_data):
+        all_users = []
+        for user in user_data:
+            new_user = User(user["id"], user["firstName"],user["lastName"] )
+            all_users.append(new_user)
+        return all_users

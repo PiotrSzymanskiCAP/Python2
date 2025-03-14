@@ -8,7 +8,8 @@ def main():
 
     #user_service.fetch_all_user()
     #user_service.fetch_all_users_info(10)
-    print(len(user_service.fetch_all_users_info(10)))
+    print(f"{user_service.fetch_all_users_info(10, 30) !r} ")
+
 
 if __name__ == "__main__":
     logging.basicConfig(

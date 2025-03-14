@@ -7,8 +7,8 @@ class UserController:
     endpoint = "users"
 
 
-    def get_user_info(self, page=1, limit=10):
-        url = f"{self.base_url}{self.endpoint}?page={page}&limit={limit}"
+    def get_user_info(self, skip, limit=10):
+        url = f"{self.base_url}{self.endpoint}?skip={skip}&limit={limit}"
         response = requests.get(url)
 
         if response.status_code == 200:
