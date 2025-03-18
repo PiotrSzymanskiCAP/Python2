@@ -1,14 +1,13 @@
-from services.user_service import UserService
 import logging
+
+from services.user_service import UserService
 
 
 def main():
     print("Hello")
     user_service = UserService()
-
-    #user_service.fetch_all_user()
-    #user_service.fetch_all_users_info(10)
-    print(f"{user_service.fetch_all_users_info(10, 30) !r} ")
+    print(f"{user_service.fetch_all_users_info(10, 40) !r} ")
+    print(f"{user_service.fetch_user_info(8)}")
 
 
 if __name__ == "__main__":

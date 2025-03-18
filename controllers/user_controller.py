@@ -1,13 +1,13 @@
-import requests
 import logging
 
-class UserController:
+import requests
 
-    base_url ="https://dummyjson.com/"
+
+class UserController:
+    base_url = "https://dummyjson.com/"
     endpoint = "users"
 
-
-    def get_user_info(self, skip, limit=10):
+    def get_user_info(self, skip: int, limit: int):
         url = f"{self.base_url}{self.endpoint}?skip={skip}&limit={limit}"
         response = requests.get(url)
 
