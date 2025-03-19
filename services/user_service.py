@@ -2,7 +2,7 @@ import logging
 
 from controllers.user_controller import UserController
 from models.user import User
-from utils.mappers.user_mapper import map_users_from_data
+from utils.mappers.user_mapper import map_users_from_data, map_user_from_data
 
 
 class UserService:
@@ -24,13 +24,13 @@ class UserService:
                 break
         return all_users
 
-    def fetch_user_info(self, user_id: int) -> list[User] | None:
+    def fetch_user_info(self, user_id: int) -> User | None:
         user_data = self.user_controller.get_all_user_info()
         if user_data and user_data["users"]:
             user_list = user_data["users"]
             for user in user_list:
                 if user["id"] == user_id:
-                    return map_users_from_data([user])
+                    return map_user_from_data(user)
             print(f"User ID {user_id} not found.")
         else:
             print("Failed to fetch user data")

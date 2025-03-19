@@ -11,15 +11,15 @@ def get_country_name(latitude: float, longitude: float) -> str:
 class User:
 
     def __init__(
-            self,
-            id: int,
-            first_name: str,
-            last_name: str,
-            age: int,
-            latitude: float,
-            longitude: float,
+        self,
+        id: int,
+        first_name: str,
+        last_name: str,
+        age: int,
+        latitude: float,
+        longitude: float,
     ):
-        self.uuid = uuid.uuid4()
+        self._uuid = uuid.uuid4()
         self._id = id
         self._first_name = first_name
         self._last_name = last_name
