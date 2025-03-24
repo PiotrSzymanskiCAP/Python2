@@ -23,7 +23,7 @@ class UserController:
         response = requests.get(url)
 
         if response.status_code == 200:
-            logging.info("Successfully fetched data")
+            logging.info("Successfully fetched users data")
             return response.json()
 
         else:

@@ -1,3 +1,4 @@
+from database.product_entity import ProductEntity
 from models.product import Product
 
 
@@ -15,4 +16,14 @@ def map_product_from_data(product) -> Product:
         product["title"],
         product["price"],
         product["category"],
+    )
+
+
+def map_product_to_entity(product: Product) -> ProductEntity:
+    return ProductEntity(
+        str(product._uuid),
+        product._id,
+        product._title,
+        product._price,
+        product._category,
     )

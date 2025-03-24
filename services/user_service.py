@@ -9,7 +9,7 @@ def save_users_to_file(users):
     with open("user_output.txt", "w") as file:
         file.write(f"{users !r}")
 
-    print("Output has been saved to output.txt")
+    print("Output has been saved to user_output.txt")
 
 
 class UserService:

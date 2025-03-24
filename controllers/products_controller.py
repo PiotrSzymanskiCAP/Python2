@@ -12,7 +12,7 @@ class ProductsController:
         response = requests.get(url)
 
         if response.status_code == 200:
-            logging.info("Successfully fetched data")
+            logging.info("Successfully fetched products data")
             return response.json()
 
         else:
