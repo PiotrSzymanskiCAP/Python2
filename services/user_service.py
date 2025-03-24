@@ -1,6 +1,6 @@
 import logging
 
-from controllers.user_controller import UserController
+from controllers.users_controller import UserController
 from models.user import User
 from utils.mappers.user_mapper import map_users_from_data, map_user_from_data
 
