@@ -5,6 +5,13 @@ from models.user import User
 from utils.mappers.user_mapper import map_users_from_data, map_user_from_data
 
 
+def save_users_to_file(users):
+    with open("user_output.txt", "w") as file:
+        file.write(f"{users !r}")
+
+    print("Output has been saved to output.txt")
+
+
 class UserService:
     user_controller = UserController()
 
@@ -14,7 +21,7 @@ class UserService:
         total_users = 0
 
         while total_users < page_limit * limit:
-            user_data = self.user_controller.get_user_info(skip, limit)
+            user_data = self.user_controller.get_users_info(skip, limit)
             if user_data and user_data["users"]:
                 all_users.extend(map_users_from_data(user_data["users"]))
                 logging.info(f"Range: {skip} - {skip + limit}")
@@ -25,7 +32,7 @@ class UserService:
         return all_users
 
     def fetch_user_info(self, user_id: int) -> User | None:
-        user_data = self.user_controller.get_all_user_info()
+        user_data = self.user_controller.get_all_users_info()
         if user_data and user_data["users"]:
             user_list = user_data["users"]
             for user in user_list:

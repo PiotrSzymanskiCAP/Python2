@@ -7,7 +7,7 @@ class UserController:
     base_url = "https://dummyjson.com/"
     endpoint = "users"
 
-    def get_user_info(self, skip: int, limit: int):
+    def get_users_info(self, skip: int, limit: int):
         url = f"{self.base_url}{self.endpoint}?skip={skip}&limit={limit}"
         response = requests.get(url)
 
@@ -18,7 +18,7 @@ class UserController:
         else:
             logging.info("Request failed to fetch data")
 
-    def get_all_user_info(self):
+    def get_all_users_info(self):
         url = f"{self.base_url}{self.endpoint}"
         response = requests.get(url)
 
@@ -28,6 +28,3 @@ class UserController:
 
         else:
             logging.info("Request failed to fetch data")
-
-    def get_pages(self, response):
-        return response["info"]["pages"]
