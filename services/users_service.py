@@ -2,7 +2,7 @@ import logging
 
 from controllers.users_controller import UserController
 from models.user import User
-from utils.mappers.user_mapper import map_users_from_data, map_user_from_data
+from utils.mappers.users_mapper import map_users_from_data, map_user_from_data
 
 
 def save_users_to_file(users):
