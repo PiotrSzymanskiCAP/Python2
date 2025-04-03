@@ -60,6 +60,6 @@ def get_most_ordered_category_by_user_querry(session):
 
 def save_most_ordered_to_file(most_ordered):
     with open("most_ordered_output.txt", "w") as file:
-        file.write(f"{most_ordered !r}")
+        file.write(f"{str(most_ordered)}")
 
     print("Output has been saved to most_ordered_output.txt")

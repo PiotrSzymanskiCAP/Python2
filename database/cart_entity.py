@@ -9,21 +9,20 @@ from models.product import Product
 class CartEntity(Base):
     __tablename__ = "carts"
 
-    uuid: Mapped[str] = mapped_column(primary_key=True)
-    id: Mapped[int]
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    cart_id: Mapped[int]
     user_id: Mapped[int] = mapped_column(
-        Integer, ForeignKey("users.id"), nullable=False
+        Integer, ForeignKey("users.user_id"), nullable=False
     )
     products: Mapped[dict] = mapped_column(JSON, nullable=False)
 
-    def __init__(self, uuid: str, id: int, user_id: int, products: dict):
-        self.uuid = uuid
-        self.id = id
+    def __init__(self, cart_id: int, user_id: int, products: dict):
+        self.cart_id = cart_id
         self.user_id = user_id
         self.products = products
 
     def __repr__(self):
-        return f"{self.uuid} | Cart with ID: {self.id} -> User ID: {self.user_id} Products(ID's, Quantity): {self.products}\n"
+        return f"{self.id} | Cart with ID: {self.cart_id} -> User ID: {self.user_id} Products(ID's, Quantity): {self.products}\n"
 
     @hybrid_property
     def product_ids(self):
@@ -34,7 +33,8 @@ class CartEntity(Base):
         return self.products.keys()
 
     def get_products(self, session):
-        return session.query(Product).filter(Product._id.in_(self.product_ids)).all()
-
-
-# CartEntity.users = relationship("UserEntity", back_populates="carts")
+        return (
+            session.query(Product)
+            .filter(Product._product_id.in_(self.product_ids))
+            .all()
+        )

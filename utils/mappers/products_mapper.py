@@ -21,8 +21,7 @@ def map_product_from_data(product) -> Product:
 
 def map_product_to_entity(product: Product) -> ProductEntity:
     return ProductEntity(
-        str(product._uuid),
-        product._id,
+        product._product_id,
         product._title,
         product._price,
         product._category,

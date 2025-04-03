@@ -7,6 +7,7 @@ from database.user_entity import UserEntity
 from services.carts_service import CartService, save_carts_to_file
 from services.most_ordered import (
     get_most_ordered_category_by_user,
+    save_most_ordered_to_file,
 )
 from services.products_service import ProductsService, save_products_to_file
 from services.users_service import UserService, save_users_to_file
@@ -50,8 +51,9 @@ def main():
         session.commit()
         print(session.query(CartEntity).all())
 
-        get_most_ordered_category_by_user(session)
-        print(f"{get_most_ordered_category_by_user(session)}")
+        most_ordered = get_most_ordered_category_by_user(session)
+        print(f"{most_ordered}")
+        save_most_ordered_to_file(most_ordered)
 
         # most_ordered_category = get_most_ordered_category_by_user_querry(session)
         # for user_id, category in most_ordered_category:

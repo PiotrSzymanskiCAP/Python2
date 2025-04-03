@@ -23,8 +23,7 @@ def map_user_from_data(user) -> User:
 
 def map_user_to_entity(user: User) -> UserEntity:
     return UserEntity(
-        str(user._uuid),
-        user._id,
+        user._user_id,
         user._first_name,
         user._last_name,
         user._age,

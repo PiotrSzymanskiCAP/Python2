@@ -19,8 +19,7 @@ def map_cart_from_data(cart) -> Cart:
 
 def map_cart_to_entity(cart: Cart) -> CartEntity:
     return CartEntity(
-        str(cart._uuid),
-        cart._id,
+        cart._cart_id,
         cart._user_id,
         cart._products,
     )
