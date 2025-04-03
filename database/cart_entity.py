@@ -36,4 +36,5 @@ class CartEntity(Base):
     def get_products(self, session):
         return session.query(Product).filter(Product._id.in_(self.product_ids)).all()
 
+
 # CartEntity.users = relationship("UserEntity", back_populates="carts")

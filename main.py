@@ -5,7 +5,9 @@ from database.db import Base, db, Session
 from database.product_entity import ProductEntity
 from database.user_entity import UserEntity
 from services.carts_service import CartService, save_carts_to_file
-from services.most_ordered import get_most_ordered_category_by_user
+from services.most_ordered import (
+    get_most_ordered_category_by_user,
+)
 from services.products_service import ProductsService, save_products_to_file
 from services.users_service import UserService, save_users_to_file
 from utils.mappers.carts_mapper import map_cart_to_entity
@@ -50,6 +52,10 @@ def main():
 
         get_most_ordered_category_by_user(session)
         print(f"{get_most_ordered_category_by_user(session)}")
+
+        # most_ordered_category = get_most_ordered_category_by_user_querry(session)
+        # for user_id, category in most_ordered_category:
+        #     print(f"User ID: {user_id}, Most Ordered Category: {category}")
 
 
 if __name__ == "__main__":
