@@ -2,6 +2,9 @@ from database.product_entity import ProductEntity
 from models.product import Product
 
 
+# CLASS METHODS jak w Javie of
+
+
 def map_products_from_data(products_data: list[dict]) -> list[Product]:
     all_products = []
     for product in products_data:
@@ -10,6 +13,7 @@ def map_products_from_data(products_data: list[dict]) -> list[Product]:
     return all_products
 
 
+# sprawdzic operator do rozpakowania dict ** (best practises / hints)
 def map_product_from_data(product) -> Product:
     return Product(
         product["id"],

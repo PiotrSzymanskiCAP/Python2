@@ -11,6 +11,7 @@ def get_most_ordered_category_by_user(session):
     user_category_count = defaultdict(lambda: defaultdict(int))
 
     carts = session.query(CartEntity).all()
+    # all products as one querry !!!!!
     for cart in carts:
         user_id = cart.user_id
         for product_id, quantity in cart.products.items():

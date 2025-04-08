@@ -3,16 +3,16 @@ import logging
 import requests
 
 
-class CartsController:
+class UserAdapter:
     base_url = "https://dummyjson.com/"
-    endpoint = "carts"
+    endpoint = "users"
 
-    def get_carts_info(self, skip: int, limit: int):
+    def get_users_info(self, skip: int, limit: int):
         url = f"{self.base_url}{self.endpoint}?skip={skip}&limit={limit}"
         response = requests.get(url)
 
         if response.status_code == 200:
-            logging.info("Successfully fetched carts data")
+            logging.info("Successfully fetched users data")
             return response.json()
 
         else:

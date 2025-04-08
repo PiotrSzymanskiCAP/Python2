@@ -6,16 +6,17 @@ def get_country_name(latitude: float, longitude: float) -> str:
     return location["country"]
 
 
+# Dataclass frozen? // validate post init
 class User:
 
     def __init__(
-            self,
-            user_id: int,
-            first_name: str,
-            last_name: str,
-            age: int,
-            latitude: float,
-            longitude: float,
+        self,
+        user_id: int,
+        first_name: str,
+        last_name: str,
+        age: int,
+        latitude: float,
+        longitude: float,
     ):
         self._user_id = user_id
         self._first_name = first_name

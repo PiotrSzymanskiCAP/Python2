@@ -1,44 +1,51 @@
 import logging
 
-from controllers.users_controller import UserController
+from adapters.users_adapter import UserAdapter
+from database.db import Session
 from models.user import User
-from utils.mappers.users_mapper import map_users_from_data, map_user_from_data
+from services.file_service import clear_file, save_data_to_file
+from utils.mappers.users_mapper import map_users_from_data, map_user_to_entity
 
 
-def save_users_to_file(users):
-    with open("user_output.txt", "w") as file:
-        file.write(f"{users !r}")
-
-    print("Output has been saved to user_output.txt")
+def save_users_to_db(session: Session, users: [User]):
+    for user in users:
+        session.add(map_user_to_entity(user))
+    session.commit()
 
 
 class UserService:
-    user_controller = UserController()
+    user_controller = UserAdapter()
+    file_name = "users_output.txt"
 
-    def fetch_all_users_info(self, page_limit: int, limit: int) -> list[User]:
-        all_users = []
+    def fetch_and_save_all_users_info(self, batch_size: int, session: Session):
+        clear_file(self.file_name)
         skip = 0
-        total_users = 0
 
-        while total_users < page_limit * limit:
-            user_data = self.user_controller.get_users_info(skip, limit)
-            if user_data and user_data["users"]:
-                all_users.extend(map_users_from_data(user_data["users"]))
-                logging.info(f"Range: {skip} - {skip + limit}")
-                skip += limit
-                total_users += len(user_data["users"])
-            else:
+        initial_data = self.user_controller.get_users_info(skip, batch_size)
+        if not initial_data or "total" not in initial_data:
+            return
+
+        total_users = initial_data["total"]
+        mapped_users = map_users_from_data(initial_data["users"])
+        save_data_to_file(mapped_users, self.file_name)
+        save_users_to_db(session, mapped_users)
+
+        skip += batch_size
+
+        while skip < total_users:
+            try:
+                user_data = self.user_controller.get_users_info(skip, batch_size)
+                if user_data and user_data["users"]:
+                    mapped_users = map_users_from_data(user_data["users"])
+                    save_data_to_file(mapped_users, self.file_name)
+                    save_users_to_db(session, mapped_users)
+                    logging.info(f"Range: {skip} - {skip + batch_size}")
+                    skip += batch_size
+                else:
+                    break
+
+            except Exception as e:
+                logging.error(
+                    f"Error fetching data for range {skip} - {skip + batch_size}: {e}"
+                )
                 break
-        return all_users
-
-    def fetch_user_info(self, user_id: int) -> User | None:
-        user_data = self.user_controller.get_all_users_info()
-        if user_data and user_data["users"]:
-            user_list = user_data["users"]
-            for user in user_list:
-                if user["id"] == user_id:
-                    return map_user_from_data(user)
-            print(f"User ID {user_id} not found.")
-        else:
-            print("Failed to fetch user data")
-        return None

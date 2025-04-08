@@ -16,14 +16,14 @@ class UserEntity(Base):
     country: Mapped[str]
 
     def __init__(
-            self,
-            user_id: int,
-            firstname: str,
-            lastname: str,
-            age: int,
-            latitude: float,
-            longitude: float,
-            country: str,
+        self,
+        user_id: int,
+        firstname: str,
+        lastname: str,
+        age: int,
+        latitude: float,
+        longitude: float,
+        country: str,
     ):
         self.user_id = user_id
         self.firstname = firstname

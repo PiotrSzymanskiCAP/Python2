@@ -3,16 +3,19 @@ import logging
 import requests
 
 
-class ProductsController:
-    base_url = "https://dummyjson.com/"
-    endpoint = "products"
+# connector / ADAPTER
 
-    def get_products_info(self, skip: int, limit: int):
+
+class CartsAdapter:
+    base_url = "https://dummyjson.com/"
+    endpoint = "carts"
+
+    def get_carts_info(self, skip: int, limit: int):
         url = f"{self.base_url}{self.endpoint}?skip={skip}&limit={limit}"
         response = requests.get(url)
 
         if response.status_code == 200:
-            logging.info("Successfully fetched products data")
+            logging.info("Successfully fetched carts data")
             return response.json()
 
         else:
