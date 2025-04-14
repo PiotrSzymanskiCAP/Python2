@@ -17,5 +17,10 @@ class CartEntity(Base):
         self.cart_id = cart_id
         self.user_id = user_id
 
-    def __repr__(self):
+    def __str__(self):
         return f"{self.id} | Cart with ID: {self.cart_id} -> User ID: {self.user_id} \n"
+
+    def __repr__(self):
+        return (
+            f"CartEntity(id={self.id}, cart_id={self.cart_id}, user_id={self.user_id})"
+        )

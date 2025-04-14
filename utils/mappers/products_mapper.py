@@ -25,8 +25,8 @@ def map_product_from_data(product) -> Product:
 
 def map_product_to_entity(product: Product) -> ProductEntity:
     return ProductEntity(
-        product._product_id,
-        product._title,
-        product._price,
-        product._category,
+        product.product_id,
+        product.title,
+        product.price,
+        product.category,
     )

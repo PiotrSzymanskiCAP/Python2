@@ -16,5 +16,14 @@ class BoughtProductEntity(Base):
         self.product_id = product_id
         self.quantity = quantity
 
+    def __str__(self):
+        return (
+            f"{self.id} | Cart with ID: {self.cart_id} -> Bought product ID: {self.product_id}, "
+            f"Quantity: {self.quantity} \n"
+        )
+
     def __repr__(self):
-        return f"{self.id} | Cart with ID: {self.cart_id} -> Bought product ID: {self.product_id}, Quantity: {self.quantity} \n"
+        return (
+            f"BoughtProductEntity(id={self.id}, cart_id={self.cart_id}, "
+            f"product_id={self.product_id}, quantity={self.quantity})"
+        )

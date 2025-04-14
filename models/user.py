@@ -1,3 +1,5 @@
+from dataclasses import dataclass, field
+
 import reverse_geocode
 
 
@@ -6,25 +8,30 @@ def get_country_name(latitude: float, longitude: float) -> str:
     return location["country"]
 
 
-# Dataclass frozen? // validate post init
+@dataclass(frozen=True)
 class User:
+    user_id: int
+    first_name: str
+    last_name: str
+    age: int
+    latitude: float
+    longitude: float
+    _country: str = field(init=False, repr=False)
 
-    def __init__(
-        self,
-        user_id: int,
-        first_name: str,
-        last_name: str,
-        age: int,
-        latitude: float,
-        longitude: float,
-    ):
-        self._user_id = user_id
-        self._first_name = first_name
-        self._last_name = last_name
-        self._age = age
-        self._lat = latitude
-        self._lng = longitude
-        self._country = get_country_name(self._lat, self._lng)
+    def __post_init__(self):
+        object.__setattr__(
+            self, "_country", get_country_name(self.latitude, self.longitude)
+        )
+
+    def __str__(self):
+        return (
+            f"User with ID: {self.user_id} -> {self.first_name} {self.last_name} "
+            f"Age: {self.age} Cord: {self.latitude}, {self.longitude} -> {self._country}"
+        )
 
     def __repr__(self):
-        return f"User with ID: {self._user_id} -> {self._first_name} {self._last_name} Age: {self._age} Cord: {self._lat}, {self._lng} -> {self._country}\n"
+        return (
+            f"User(user_id={self.user_id}, first_name={self.first_name!r}, "
+            f"last_name={self.last_name!r}, age={self.age}, "
+            f"latitude={self.latitude}, longitude={self.longitude}, country={self._country!r})"
+        )

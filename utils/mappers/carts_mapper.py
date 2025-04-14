@@ -21,12 +21,12 @@ def map_cart_from_data(cart) -> Cart:
 
 
 def map_cart_to_entity(cart: Cart) -> CartEntity:
-    return CartEntity(cart._cart_id, cart._user_id)
+    return CartEntity(cart.cart_id, cart.user_id)
 
 
 def map_cart_to_bought_products_entities(cart: Cart) -> list:
     bought_product_entities = []
-    for product_id, quantity in cart._products.items():
-        bought_product_entity = BoughtProductEntity(cart._cart_id, product_id, quantity)
+    for product_id, quantity in cart.products.items():
+        bought_product_entity = BoughtProductEntity(cart.cart_id, product_id, quantity)
         bought_product_entities.append(bought_product_entity)
     return bought_product_entities

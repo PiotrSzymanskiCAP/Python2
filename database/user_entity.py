@@ -16,14 +16,14 @@ class UserEntity(Base):
     country: Mapped[str]
 
     def __init__(
-        self,
-        user_id: int,
-        firstname: str,
-        lastname: str,
-        age: int,
-        latitude: float,
-        longitude: float,
-        country: str,
+            self,
+            user_id: int,
+            firstname: str,
+            lastname: str,
+            age: int,
+            latitude: float,
+            longitude: float,
+            country: str,
     ):
         self.user_id = user_id
         self.firstname = firstname
@@ -33,5 +33,15 @@ class UserEntity(Base):
         self.longitude = longitude
         self.country = country
 
+    def __str__(self):
+        return (
+            f"{self.id} | User with ID: {self.user_id} -> {self.firstname} {self.lastname} Age: {self.age}"
+            f" Cord: {self.latitude}, {self.longitude} -> {self.country}\n"
+        )
+
     def __repr__(self):
-        return f"{self.id} | User with ID: {self.user_id} -> {self.firstname} {self.lastname} Age: {self.age} Cord: {self.latitude}, {self.longitude} -> {self.country}\n"
+        return (
+            f"UserEntity(id={self.id}, user_id={self.user_id}, firstname={self.firstname!r}, "
+            f"lastname={self.lastname!r}, age={self.age}, latitude={self.latitude}, "
+            f"longitude={self.longitude}, country={self.country!r})"
+        )

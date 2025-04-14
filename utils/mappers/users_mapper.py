@@ -23,11 +23,11 @@ def map_user_from_data(user) -> User:
 
 def map_user_to_entity(user: User) -> UserEntity:
     return UserEntity(
-        user._user_id,
-        user._first_name,
-        user._last_name,
-        user._age,
-        user._lat,
-        user._lng,
+        user.user_id,
+        user.first_name,
+        user.last_name,
+        user.age,
+        user.latitude,
+        user.longitude,
         user._country,
     )

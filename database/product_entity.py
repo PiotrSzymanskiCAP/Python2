@@ -13,16 +13,25 @@ class ProductEntity(Base):
     category: Mapped[str]
 
     def __init__(
-            self,
-            product_id: int,
-            title: str,
-            price: float,
-            category: str,
+        self,
+        product_id: int,
+        title: str,
+        price: float,
+        category: str,
     ):
         self.product_id = product_id
         self.title = title
         self.price = price
         self.category = category
 
+    def __str__(self):
+        return (
+            f"{self.id} | Product with ID: {self.product_id} -> {self.title} Price: {self.price} "
+            f"Category: {self.category}\n"
+        )
+
     def __repr__(self):
-        return f"{self.id} | Product with ID: {self.product_id} -> {self.title} Price: {self.price} Category: {self.category}\n"
+        return (
+            f"ProductEntity(id={self.id}, product_id={self.product_id}, title={self.title!r}, "
+            f"price={self.price}, category={self.category!r})"
+        )
