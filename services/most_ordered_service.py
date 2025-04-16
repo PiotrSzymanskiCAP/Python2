@@ -60,7 +60,7 @@ def get_most_ordered_category_by_user_querry(session):
 
     sorted_most_ordered_category = dict(sorted(most_ordered_category.items()))
     save_most_ordered_to_file(sorted_most_ordered_category)
-    print(f"QUERRY {sorted_most_ordered_category}")
+    return sorted_most_ordered_category
 
 
 def save_most_ordered_to_file(most_ordered):
