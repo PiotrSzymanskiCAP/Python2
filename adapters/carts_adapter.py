@@ -3,9 +3,6 @@ import logging
 import requests
 
 
-# connector / ADAPTER
-
-
 class CartsAdapter:
     base_url = "https://dummyjson.com/"
     endpoint = "carts"

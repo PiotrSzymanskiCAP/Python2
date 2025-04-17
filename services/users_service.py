@@ -8,8 +8,9 @@ from utils.mappers.users_mapper import map_users_from_data, map_user_to_entity
 
 
 def save_users_to_db(session: Session, users: [User]):
-    for user in users:
-        session.add(map_user_to_entity(user))
+    with session.begin():
+        for user in users:
+            session.add(map_user_to_entity(user))
     session.commit()
 
 
@@ -27,11 +28,7 @@ class UserService:
             return
 
         total_users = initial_data["total"]
-        mapped_users = map_users_from_data(initial_data["users"])
-        save_data_to_file(mapped_users, self.file_name)
-        with session.begin():
-            save_users_to_db(session, mapped_users)
-        session.commit()
+        self.process_and_save_users(session, initial_data["users"])
 
         skip += batch_size
 
@@ -39,18 +36,18 @@ class UserService:
             try:
                 user_data = self.user_controller.get_users_info(skip, batch_size)
                 if user_data and user_data["users"]:
-                    mapped_users = map_users_from_data(user_data["users"])
-                    save_data_to_file(mapped_users, self.file_name)
-                    with session.begin():
-                        save_users_to_db(session, mapped_users)
-                    session.commit()
+                    self.process_and_save_users(session, user_data["users"])
                     logging.info(f"Range: {skip} - {skip + batch_size}")
                     skip += batch_size
                 else:
                     break
-
             except Exception as e:
                 logging.error(
                     f"Error fetching data for range {skip} - {skip + batch_size}: {e}"
                 )
                 break
+
+    def process_and_save_users(self, session, users):
+        mapped_users = map_users_from_data(users)
+        save_data_to_file(mapped_users, self.file_name)
+        save_users_to_db(session, mapped_users)

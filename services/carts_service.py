@@ -12,17 +12,13 @@ from utils.mappers.carts_mapper import (
 )
 
 
-def save_carts_to_db(session: Session, carts: [Cart]):
-    for cart in carts:
-        session.add(map_cart_to_entity(cart))
-    session.commit()
-
-
-def save_bought_products_to_db(session: Session, carts: [Cart]):
-    for cart in carts:
-        bought_products = map_cart_to_bought_products_entities(cart)
-        for bought_product in bought_products:
-            session.add(bought_product)
+def save_carts_and_bought_products_to_db(session: Session, carts: [Cart]):
+    with session.begin():
+        for cart in carts:
+            session.add(map_cart_to_entity(cart))
+            bought_products = map_cart_to_bought_products_entities(cart)
+            for bought_product in bought_products:
+                session.add(bought_product)
     session.commit()
 
 
@@ -47,15 +43,7 @@ class CartService:
             return
 
         total_carts = initial_data["total"]
-        mapped_carts = map_carts_from_data(initial_data["carts"])
-        save_data_to_file(mapped_carts, self.file_name)
-        with session.begin():
-            save_carts_to_db(session, mapped_carts)
-        session.commit()
-
-        with session.begin():
-            save_bought_products_to_db(session, mapped_carts)
-        session.commit()
+        self.process_and_save_carts(session, initial_data["carts"])
 
         skip += batch_size
 
@@ -63,21 +51,18 @@ class CartService:
             try:
                 cart_data = self.cart_controller.get_carts_info(skip, batch_size)
                 if cart_data and cart_data["carts"]:
-                    mapped_carts = map_carts_from_data(cart_data["carts"])
-                    save_data_to_file(mapped_carts, self.file_name)
-                    with session.begin():
-                        save_carts_to_db(session, mapped_carts)
-                    session.commit()
-                    with session.begin():
-                        save_bought_products_to_db(session, mapped_carts)
-                    session.commit()
+                    self.process_and_save_carts(session, cart_data["carts"])
                     logging.info(f"Range: {skip} - {skip + batch_size}")
                     skip += batch_size
                 else:
                     break
-
             except Exception as e:
                 logging.error(
                     f"Error fetching data for range {skip} - {skip + batch_size}: {e}"
                 )
                 break
+
+    def process_and_save_carts(self, session, carts):
+        mapped_carts = map_carts_from_data(carts)
+        save_data_to_file(mapped_carts, self.file_name)
+        save_carts_and_bought_products_to_db(session, mapped_carts)

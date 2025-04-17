@@ -8,8 +8,9 @@ from utils.mappers.products_mapper import map_products_from_data, map_product_to
 
 
 def save_products_to_db(session: Session, products: [Product]):
-    for product in products:
-        session.add(map_product_to_entity(product))
+    with session.begin():
+        for product in products:
+            session.add(map_product_to_entity(product))
     session.commit()
 
 
@@ -27,11 +28,7 @@ class ProductsService:
             return
 
         total_products = initial_data["total"]
-        mapped_products = map_products_from_data(initial_data["products"])
-        save_data_to_file(mapped_products, self.file_name)
-        with session.begin():
-            save_products_to_db(session, mapped_products)
-        session.commit()
+        self.process_and_save_products(session, initial_data["products"])
 
         skip += batch_size
 
@@ -41,18 +38,18 @@ class ProductsService:
                     skip, batch_size
                 )
                 if product_data and product_data["products"]:
-                    mapped_products = map_products_from_data(product_data["products"])
-                    save_data_to_file(mapped_products, self.file_name)
-                    with session.begin():
-                        save_products_to_db(session, mapped_products)
-                    session.commit()
+                    self.process_and_save_products(session, product_data["products"])
                     logging.info(f"Range: {skip} - {skip + batch_size}")
                     skip += batch_size
                 else:
                     break
-
             except Exception as e:
                 logging.error(
                     f"Error fetching data for range {skip} - {skip + batch_size}: {e}"
                 )
                 break
+
+    def process_and_save_products(self, session, products):
+        mapped_products = map_products_from_data(products)
+        save_data_to_file(mapped_products, self.file_name)
+        save_products_to_db(session, mapped_products)
