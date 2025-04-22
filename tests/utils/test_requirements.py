@@ -23,6 +23,12 @@ def test_fastapi_dependency():
     ), "fastAPI is not installed"
 
 
+def test_uvtool_dependency():
+    result = subprocess.run(["pip", "freeze"], capture_output=True, text=True)
+    dependencies = result.stdout.split("\n")
+    assert any("uv" in dep.lower() for dep in dependencies), "UV Tool is not installed"
+
+
 def test_classes_have_str_and_repr():
     # use your domain objects
     classes = [Cart, User, Product]
@@ -33,10 +39,10 @@ def test_classes_have_str_and_repr():
 
         str_source = inspect.getsource(str_method)
         assert (
-                "object.__str__" not in str_source
+            "object.__str__" not in str_source
         ), f"{cls.__name__} does not override __str__ method"
 
         repr_source = inspect.getsource(repr_method)
         assert (
-                "object.__repr__" not in repr_source
+            "object.__repr__" not in repr_source
         ), f"{cls.__name__} does not override __repr__ method"

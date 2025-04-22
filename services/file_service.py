@@ -1,4 +1,5 @@
 def clear_file(file_name: str) -> None:
+    print(f"Clearing file: {file_name}")
     with open(f"{file_name}", "w") as file:
         pass
 
