@@ -5,10 +5,13 @@ from sqlalchemy import func
 from database.bought_product_entity import BoughtProductEntity
 from database.cart_entity import CartEntity
 from database.product_entity import ProductEntity
+from services.file_service import clear_file, save_most_ordered_to_file
 
 
 def get_most_ordered_category_by_user(session):
     user_category_count = defaultdict(lambda: defaultdict(int))
+    FILE_NAME = "most_ordered_output.txt"
+    clear_file(FILE_NAME)
 
     carts = session.query(CartEntity).all()
     products = session.query(ProductEntity).all()
@@ -33,11 +36,13 @@ def get_most_ordered_category_by_user(session):
         most_ordered_category[user_id] = max(category_count, key=category_count.get)
 
     sorted_most_ordered_category = dict(sorted(most_ordered_category.items()))
-    save_most_ordered_to_file(sorted_most_ordered_category)
+    save_most_ordered_to_file(sorted_most_ordered_category, FILE_NAME)
 
 
-def get_most_ordered_category_by_user_querry(session):
+def get_most_ordered_category_by_user_query(session):
     user_category_count = defaultdict(lambda: defaultdict(int))
+    FILE_NAME = "most_ordered_output.txt"
+    clear_file(FILE_NAME)
 
     results = (
         session.query(
@@ -59,12 +64,5 @@ def get_most_ordered_category_by_user_querry(session):
         most_ordered_category[user_id] = max(category_count, key=category_count.get)
 
     sorted_most_ordered_category = dict(sorted(most_ordered_category.items()))
-    save_most_ordered_to_file(sorted_most_ordered_category)
+    save_most_ordered_to_file(sorted_most_ordered_category, FILE_NAME)
     return sorted_most_ordered_category
-
-
-def save_most_ordered_to_file(most_ordered):
-    with open("most_ordered_output.txt", "w") as file:
-        file.write(f"{str(most_ordered)}")
-
-    print("Output has been saved to most_ordered_output.txt")

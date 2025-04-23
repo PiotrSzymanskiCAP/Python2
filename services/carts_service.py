@@ -31,11 +31,11 @@ def get_all_products_in_carts() -> set:
 
 class CartService:
     cart_controller = CartsAdapter()
-    file_name = "carts_output.txt"
+    FILE_NAME = "carts_output.txt"
 
     def fetch_and_save_all_carts_info(self, batch_size: int):
         session = Session()
-        clear_file(self.file_name)
+        clear_file(self.FILE_NAME)
         skip = 0
 
         initial_data = self.cart_controller.get_carts_info(skip, batch_size)
@@ -64,5 +64,5 @@ class CartService:
 
     def process_and_save_carts(self, session, carts):
         mapped_carts = map_carts_from_data(carts)
-        save_data_to_file(mapped_carts, self.file_name)
+        save_data_to_file(mapped_carts, self.FILE_NAME)
         save_carts_and_bought_products_to_db(session, mapped_carts)

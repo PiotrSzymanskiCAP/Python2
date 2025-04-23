@@ -10,7 +10,7 @@ def map_products_from_data(products_data: list[dict]) -> list[Product]:
     return all_products
 
 
-def map_product_from_data(product) -> Product:
+def map_product_from_data(product: dict) -> Product:
     return Product(
         product["id"],
         product["title"],

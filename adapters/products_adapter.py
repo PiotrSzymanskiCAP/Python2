@@ -16,4 +16,4 @@ class ProductsAdapter:
             return response.json()
 
         else:
-            logging.info("Request failed to fetch data")
+            logging.error("Request failed to fetch data")

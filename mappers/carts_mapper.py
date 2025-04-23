@@ -11,7 +11,7 @@ def map_carts_from_data(carts_data: list[dict]) -> list[Cart]:
     return all_carts
 
 
-def map_cart_from_data(cart) -> Cart:
+def map_cart_from_data(cart: dict) -> Cart:
     products = cart["products"]
     unwrapped_products = {}
 

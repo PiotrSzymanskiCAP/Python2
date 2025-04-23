@@ -9,7 +9,7 @@ from database.db import Session, get_db
 from database.product_entity import ProductEntity
 from database.user_entity import UserEntity
 from models.pydantic_models import User, Product, Cart, BoughtProduct
-from services.most_ordered_service import get_most_ordered_category_by_user_querry
+from services.most_ordered_service import get_most_ordered_category_by_user_query
 
 router = APIRouter()
 
@@ -36,5 +36,5 @@ async def get_bought_products(db: Session = Depends(get_db)):
 
 @router.get("/most-ordered-category")
 async def most_ordered_category(db: Session = Depends(get_db)):
-    data = get_most_ordered_category_by_user_querry(db)
+    data = get_most_ordered_category_by_user_query(db)
     return JSONResponse(content=data)

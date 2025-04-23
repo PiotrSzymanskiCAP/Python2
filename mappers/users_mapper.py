@@ -10,7 +10,7 @@ def map_users_from_data(user_data: list[dict]) -> list[User]:
     return all_users
 
 
-def map_user_from_data(user) -> User:
+def map_user_from_data(user: dict) -> User:
     return User(
         user["id"],
         user["firstName"],
