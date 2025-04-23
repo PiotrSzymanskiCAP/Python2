@@ -58,6 +58,7 @@ def test_save_users_to_db(mock_session, mock_users):
     assert mock_session.add.call_count == len(mock_users)
     assert mock_session.commit.called
 
+
 # @patch("services.file_service.clear_file")
 # @patch("services.file_service.save_data_to_file")
 # @patch("services.users_service.save_users_to_db")
