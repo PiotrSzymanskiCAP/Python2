@@ -1,9 +1,9 @@
-from models.user import User
-from utils.mappers.users_mapper import (
+from mappers.users_mapper import (
     map_users_from_data,
     map_user_to_entity,
     map_user_from_data,
 )
+from models.user import User
 
 
 def test_map_users_from_data():

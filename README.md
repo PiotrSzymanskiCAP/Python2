@@ -1,0 +1,4 @@
+- uruchamianie
+- lint komendy
+- wymagania co do testow i coverage
+- 

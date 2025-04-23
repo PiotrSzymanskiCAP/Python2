@@ -2,9 +2,6 @@ from database.product_entity import ProductEntity
 from models.product import Product
 
 
-# CLASS METHODS jak w Javie of
-
-
 def map_products_from_data(products_data: list[dict]) -> list[Product]:
     all_products = []
     for product in products_data:

@@ -31,7 +31,7 @@ class User:
 
     def __repr__(self):
         return (
-            f"User(user_id={self.user_id}, first_name={self.first_name!r}, "
+            f"User(user_id={self.user_id}, first_name={self.first_name}, "
             f"last_name={self.last_name!r}, age={self.age}, "
-            f"latitude={self.latitude}, longitude={self.longitude}, country={self._country!r})"
+            f"latitude={self.latitude}, longitude={self.longitude}, country={self._country})"
         )

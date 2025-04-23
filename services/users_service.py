@@ -2,9 +2,9 @@ import logging
 
 from adapters.users_adapter import UserAdapter
 from database.db import Session
+from mappers.users_mapper import map_users_from_data, map_user_to_entity
 from models.user import User
 from services.file_service import clear_file, save_data_to_file
-from utils.mappers.users_mapper import map_users_from_data, map_user_to_entity
 
 
 def save_users_to_db(session: Session, users: [User]):

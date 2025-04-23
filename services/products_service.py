@@ -2,9 +2,9 @@ import logging
 
 from adapters.products_adapter import ProductsAdapter
 from database.db import Session
+from mappers.products_mapper import map_products_from_data, map_product_to_entity
 from models.product import Product
 from services.file_service import clear_file, save_data_to_file
-from utils.mappers.products_mapper import map_products_from_data, map_product_to_entity
 
 
 def save_products_to_db(session: Session, products: [Product]):

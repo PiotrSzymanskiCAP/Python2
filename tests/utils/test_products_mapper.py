@@ -1,9 +1,9 @@
-from models.product import Product
-from utils.mappers.products_mapper import (
+from mappers.products_mapper import (
     map_products_from_data,
     map_product_to_entity,
     map_product_from_data,
 )
+from models.product import Product
 
 
 def test_map_product_from_data():
