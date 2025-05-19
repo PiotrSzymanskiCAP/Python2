@@ -1,20 +1,22 @@
 from typing import List
 
 from fastapi import Depends, APIRouter
-from starlette.responses import JSONResponse
 
-from adapters.database.cart_entity import CartEntity
-from adapters.database.db import Session, get_db
+from adapters.database.db import get_db
 from adapters.database.impl.bought_product_repository_impl import (
     SqlAlchemyBoughtProductRepository,
 )
-from adapters.database.product_entity import ProductEntity
-from adapters.database.user_entity import UserEntity
+from adapters.database.impl.cart_repository_impl import SqlAlchemyCartRepository
+from adapters.database.impl.products_repository_impl import SqlAlchemyProductRepository
+from adapters.database.impl.user_repository_impl import SqlAlchemyUserRepository
 from application.domain.models.pydantic_models import User, Product, Cart, BoughtProduct
-from application.domain.services.most_ordered_service import (
-    get_most_ordered_category_by_user_query,
-)
 from application.use_cases.get_all_bought_products import GetAllBoughtProductsUseCase
+from application.use_cases.get_all_carts import GetAllCartsUseCase
+from application.use_cases.get_all_products import GetAllProductsUseCase
+from application.use_cases.get_all_users import GetAllUsersUseCase
+from application.use_cases.get_most_ordered_category import (
+    GetMostOrderedCategoryUseCase,
+)
 
 router = APIRouter()
 
@@ -24,29 +26,57 @@ def get_bought_product_use_case(db=Depends(get_db)):
     return GetAllBoughtProductsUseCase(repo)
 
 
-@router.get("/users", response_model=List[User])
-async def get_users(db: Session = Depends(get_db)):
-    return db.query(UserEntity).all()
+def get_cart_use_case(db=Depends(get_db)):
+    repo = SqlAlchemyCartRepository(db)
+    return GetAllCartsUseCase(repo)
 
 
-@router.get("/products", response_model=List[Product])
-async def get_products(db: Session = Depends(get_db)):
-    return db.query(ProductEntity).all()
+def get_user_use_case(db=Depends(get_db)):
+    repo = SqlAlchemyUserRepository(db)
+    return GetAllUsersUseCase(repo)
 
 
-@router.get("/carts", response_model=List[Cart])
-async def get_carts(db: Session = Depends(get_db)):
-    return db.query(CartEntity).all()
+def get_product_use_case(db=Depends(get_db)):
+    repo = SqlAlchemyProductRepository(db)
+    return GetAllProductsUseCase(repo)
+
+
+def get_most_ordered_category_use_case(db=Depends(get_db)):
+    return GetMostOrderedCategoryUseCase(db)
 
 
 @router.get("/most-ordered-category")
-async def most_ordered_category(db: Session = Depends(get_db)):
-    data = get_most_ordered_category_by_user_query(db)
-    return JSONResponse(content=data)
+async def most_ordered_category(
+        use_case: GetMostOrderedCategoryUseCase = Depends(
+            get_most_ordered_category_use_case
+        ),
+):
+    return use_case.execute()
 
 
 @router.get("/bought-products", response_model=List[BoughtProduct])
 async def get_bought_products(
         use_case: GetAllBoughtProductsUseCase = Depends(get_bought_product_use_case),
+):
+    return use_case.execute()
+
+
+@router.get("/carts", response_model=List[Cart])
+async def get_carts(
+        use_case: GetAllCartsUseCase = Depends(get_cart_use_case),
+):
+    return use_case.execute()
+
+
+@router.get("/users", response_model=List[User])
+async def get_users(
+        use_case: GetAllUsersUseCase = Depends(get_user_use_case),
+):
+    return use_case.execute()
+
+
+@router.get("/products", response_model=List[Product])
+async def get_products(
+        use_case: GetAllProductsUseCase = Depends(get_product_use_case),
 ):
     return use_case.execute()
