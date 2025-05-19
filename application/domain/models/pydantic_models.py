@@ -11,7 +11,7 @@ class User(BaseModel):
     country: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Product(BaseModel):
@@ -21,7 +21,7 @@ class Product(BaseModel):
     category: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Cart(BaseModel):
@@ -29,7 +29,7 @@ class Cart(BaseModel):
     user_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class BoughtProduct(BaseModel):
@@ -38,4 +38,4 @@ class BoughtProduct(BaseModel):
     quantity: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True

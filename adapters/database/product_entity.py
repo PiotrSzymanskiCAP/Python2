@@ -13,11 +13,11 @@ class ProductEntity(Base):
     category: Mapped[str]
 
     def __init__(
-            self,
-            product_id: int,
-            title: str,
-            price: float,
-            category: str,
+        self,
+        product_id: int,
+        title: str,
+        price: float,
+        category: str,
     ):
         self.product_id = product_id
         self.title = title

@@ -39,10 +39,10 @@ def test_classes_have_str_and_repr():
 
         str_source = inspect.getsource(str_method)
         assert (
-                "object.__str__" not in str_source
+            "object.__str__" not in str_source
         ), f"{cls.__name__} does not override __str__ method"
 
         repr_source = inspect.getsource(repr_method)
         assert (
-                "object.__repr__" not in repr_source
+            "object.__repr__" not in repr_source
         ), f"{cls.__name__} does not override __repr__ method"
