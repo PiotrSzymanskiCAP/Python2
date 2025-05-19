@@ -152,3 +152,8 @@ def test_most_ordered_category(client, db_session):
         assert response.status_code == 200
     except Exception as e:
         print(f"An error occurred: {e}")
+
+
+def test_invalid_endpoint(client):
+    response = client.get("/invalid-endpoint")
+    assert response.status_code == 404
