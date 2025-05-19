@@ -1,6 +1,6 @@
 import pytest
 
-from services.file_service import clear_file, save_data_to_file
+from application.domain.services.file_service import clear_file, save_data_to_file
 
 
 @pytest.fixture

@@ -3,11 +3,11 @@ import sqlalchemy
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import sessionmaker
 
-from database.bought_product_entity import BoughtProductEntity
-from database.cart_entity import CartEntity
-from database.db import Base, get_db
-from database.product_entity import ProductEntity
-from database.user_entity import UserEntity
+from adapters.database.bought_product_entity import BoughtProductEntity
+from adapters.database.cart_entity import CartEntity
+from adapters.database.db import Base, get_db
+from adapters.database.product_entity import ProductEntity
+from adapters.database.user_entity import UserEntity
 from main import app
 
 engine = sqlalchemy.create_engine(

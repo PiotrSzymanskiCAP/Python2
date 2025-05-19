@@ -1,5 +1,5 @@
-from database.user_entity import UserEntity
-from models.user import User
+from adapters.database.user_entity import UserEntity
+from application.domain.models.user import User
 
 
 def map_users_from_data(user_data: list[dict]) -> list[User]:

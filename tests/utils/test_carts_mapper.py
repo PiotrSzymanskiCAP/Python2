@@ -1,10 +1,10 @@
+from application.domain.models.cart import Cart
 from mappers.carts_mapper import (
     map_carts_from_data,
     map_cart_to_entity,
     map_cart_from_data,
     map_cart_to_bought_products_entities,
 )
-from models.cart import Cart
 
 
 def test_map_cart_from_data():

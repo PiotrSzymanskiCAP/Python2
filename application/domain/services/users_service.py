@@ -1,10 +1,10 @@
 import logging
 
-from adapters.users_adapter import UserAdapter
-from database.db import Session
+from adapters.database.db import Session
+from adapters.dummyjson.users_adapter import UserAdapter
+from application.domain.models.user import User
+from application.domain.services.file_service import clear_file, save_data_to_file
 from mappers.users_mapper import map_users_from_data, map_user_to_entity
-from models.user import User
-from services.file_service import clear_file, save_data_to_file
 
 
 def save_users_to_db(session: Session, users: [User]):

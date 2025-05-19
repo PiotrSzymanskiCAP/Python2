@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column
 
-from database.db import Base
+from adapters.database.db import Base
 
 
 class UserEntity(Base):
@@ -16,14 +16,14 @@ class UserEntity(Base):
     country: Mapped[str]
 
     def __init__(
-        self,
-        user_id: int,
-        firstname: str,
-        lastname: str,
-        age: int,
-        latitude: float,
-        longitude: float,
-        country: str,
+            self,
+            user_id: int,
+            firstname: str,
+            lastname: str,
+            age: int,
+            latitude: float,
+            longitude: float,
+            country: str,
     ):
         self.user_id = user_id
         self.firstname = firstname

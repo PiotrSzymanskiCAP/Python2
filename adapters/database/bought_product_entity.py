@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column
 
-from database.db import Base
+from adapters.database.db import Base
 
 
 class BoughtProductEntity(Base):

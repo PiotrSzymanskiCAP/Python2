@@ -2,10 +2,13 @@ from collections import defaultdict
 
 from sqlalchemy import func
 
-from database.bought_product_entity import BoughtProductEntity
-from database.cart_entity import CartEntity
-from database.product_entity import ProductEntity
-from services.file_service import clear_file, save_most_ordered_to_file
+from adapters.database.bought_product_entity import BoughtProductEntity
+from adapters.database.cart_entity import CartEntity
+from adapters.database.product_entity import ProductEntity
+from application.domain.services.file_service import (
+    clear_file,
+    save_most_ordered_to_file,
+)
 
 
 def get_most_ordered_category_by_user(session):

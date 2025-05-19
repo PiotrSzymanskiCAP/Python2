@@ -1,5 +1,5 @@
-from database.product_entity import ProductEntity
-from models.product import Product
+from adapters.database.product_entity import ProductEntity
+from application.domain.models.product import Product
 
 
 def map_products_from_data(products_data: list[dict]) -> list[Product]:

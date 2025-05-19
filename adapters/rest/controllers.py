@@ -3,13 +3,15 @@ from typing import List
 from fastapi import Depends, APIRouter
 from starlette.responses import JSONResponse
 
-from database.bought_product_entity import BoughtProductEntity
-from database.cart_entity import CartEntity
-from database.db import Session, get_db
-from database.product_entity import ProductEntity
-from database.user_entity import UserEntity
-from models.pydantic_models import User, Product, Cart, BoughtProduct
-from services.most_ordered_service import get_most_ordered_category_by_user_query
+from adapters.database.bought_product_entity import BoughtProductEntity
+from adapters.database.cart_entity import CartEntity
+from adapters.database.db import Session, get_db
+from adapters.database.product_entity import ProductEntity
+from adapters.database.user_entity import UserEntity
+from application.domain.models.pydantic_models import User, Product, Cart, BoughtProduct
+from application.domain.services.most_ordered_service import (
+    get_most_ordered_category_by_user_query,
+)
 
 router = APIRouter()
 

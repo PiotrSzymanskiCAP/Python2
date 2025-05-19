@@ -1,15 +1,15 @@
 import logging
 
-from adapters.carts_adapter import CartsAdapter
-from database.bought_product_entity import BoughtProductEntity
-from database.db import Session
+from adapters.database.bought_product_entity import BoughtProductEntity
+from adapters.database.db import Session
+from adapters.dummyjson.carts_adapter import CartsAdapter
+from application.domain.models.cart import Cart
+from application.domain.services.file_service import clear_file, save_data_to_file
 from mappers.carts_mapper import (
     map_carts_from_data,
     map_cart_to_entity,
     map_cart_to_bought_products_entities,
 )
-from models.cart import Cart
-from services.file_service import clear_file, save_data_to_file
 
 
 def save_carts_and_bought_products_to_db(session: Session, carts: [Cart]):

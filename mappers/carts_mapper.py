@@ -1,6 +1,6 @@
-from database.bought_product_entity import BoughtProductEntity
-from database.cart_entity import CartEntity
-from models.cart import Cart
+from adapters.database.bought_product_entity import BoughtProductEntity
+from adapters.database.cart_entity import CartEntity
+from application.domain.models.cart import Cart
 
 
 def map_carts_from_data(carts_data: list[dict]) -> list[Cart]:

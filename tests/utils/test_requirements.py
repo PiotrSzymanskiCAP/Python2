@@ -2,9 +2,9 @@ import inspect
 import subprocess
 
 # import Domain Objects
-from models.cart import Cart
-from models.product import Product
-from models.user import User
+from application.domain.models.cart import Cart
+from application.domain.models.product import Product
+from application.domain.models.user import User
 
 
 def test_black_dependency():
@@ -39,10 +39,10 @@ def test_classes_have_str_and_repr():
 
         str_source = inspect.getsource(str_method)
         assert (
-            "object.__str__" not in str_source
+                "object.__str__" not in str_source
         ), f"{cls.__name__} does not override __str__ method"
 
         repr_source = inspect.getsource(repr_method)
         assert (
-            "object.__repr__" not in repr_source
+                "object.__repr__" not in repr_source
         ), f"{cls.__name__} does not override __repr__ method"

@@ -4,11 +4,11 @@ from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
 
-from controllers import controllers
-from database.db import Base, db
-from services.carts_service import CartService
-from services.products_service import ProductsService
-from services.users_service import UserService
+from adapters.database.db import Base, db
+from adapters.rest import controllers
+from application.domain.services.carts_service import CartService
+from application.domain.services.products_service import ProductsService
+from application.domain.services.users_service import UserService
 
 Base.metadata.create_all(db)
 user_service = UserService()

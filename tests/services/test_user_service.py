@@ -2,10 +2,10 @@ from unittest.mock import MagicMock, Mock
 
 import pytest
 
-from adapters.users_adapter import UserAdapter
-from database.db import Session
+from adapters.database.db import Session
+from adapters.dummyjson.users_adapter import UserAdapter
+from application.domain.services.users_service import save_users_to_db, UserService
 from mappers.users_mapper import map_users_from_data
-from services.users_service import save_users_to_db, UserService
 
 
 @pytest.fixture
@@ -57,7 +57,6 @@ def test_save_users_to_db(mock_session, mock_users):
     assert mock_session.begin.called
     assert mock_session.add.call_count == len(mock_users)
     assert mock_session.commit.called
-
 
 # @patch("services.file_service.clear_file")
 # @patch("services.file_service.save_data_to_file")
