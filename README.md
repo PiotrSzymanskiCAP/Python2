@@ -1,3 +1,22 @@
+## Setting Up the Python Virtual Environment
+
+1. **Activate the virtual environment:**
+
+   On Windows:
+   ```bash
+   .venv\Scripts\activate
+
+2. **Create a virtual environment (.venv):**
+
+   ```bash
+   python -m venv .venv
+
+3. **Install all dependencies from pyproject.toml:**
+
+   ```bash
+   pip install --upgrade pip
+   pip install .
+
 ## Check Code Formatting with Black
 
 To ensure that your code is formatted according to Black's standards, you can run the following command:

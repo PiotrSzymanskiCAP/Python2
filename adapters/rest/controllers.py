@@ -41,42 +41,48 @@ def get_product_use_case(db=Depends(get_db)):
     return GetAllProductsUseCase(repo)
 
 
+from adapters.database.impl.most_ordered_category_repository_impl import (
+    SqlAlchemyMostOrderedCategoryRepository,
+)
+
+
 def get_most_ordered_category_use_case(db=Depends(get_db)):
-    return GetMostOrderedCategoryUseCase(db)
+    repo = SqlAlchemyMostOrderedCategoryRepository(db)
+    return GetMostOrderedCategoryUseCase(repo)
 
 
 @router.get("/most-ordered-category")
 async def most_ordered_category(
-        use_case: GetMostOrderedCategoryUseCase = Depends(
-            get_most_ordered_category_use_case
-        ),
+    use_case: GetMostOrderedCategoryUseCase = Depends(
+        get_most_ordered_category_use_case
+    ),
 ):
     return use_case.execute()
 
 
 @router.get("/bought-products", response_model=List[BoughtProduct])
 async def get_bought_products(
-        use_case: GetAllBoughtProductsUseCase = Depends(get_bought_product_use_case),
+    use_case: GetAllBoughtProductsUseCase = Depends(get_bought_product_use_case),
 ):
     return use_case.execute()
 
 
 @router.get("/carts", response_model=List[Cart])
 async def get_carts(
-        use_case: GetAllCartsUseCase = Depends(get_cart_use_case),
+    use_case: GetAllCartsUseCase = Depends(get_cart_use_case),
 ):
     return use_case.execute()
 
 
 @router.get("/users", response_model=List[User])
 async def get_users(
-        use_case: GetAllUsersUseCase = Depends(get_user_use_case),
+    use_case: GetAllUsersUseCase = Depends(get_user_use_case),
 ):
     return use_case.execute()
 
 
 @router.get("/products", response_model=List[Product])
 async def get_products(
-        use_case: GetAllProductsUseCase = Depends(get_product_use_case),
+    use_case: GetAllProductsUseCase = Depends(get_product_use_case),
 ):
     return use_case.execute()

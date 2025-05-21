@@ -1,11 +1,13 @@
 from typing import List
 
+from sqlalchemy.orm import Session
+
 from adapters.database.bought_product_entity import BoughtProductEntity
 from application.domain.models.pydantic_models import BoughtProduct
 
 
 class SqlAlchemyBoughtProductRepository:
-    def __init__(self, session):
+    def __init__(self, session: Session):
         self.session = session
 
     def get_all(self) -> List[BoughtProduct]:
